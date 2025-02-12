@@ -1,7 +1,7 @@
 from bookshelf.models import Book
 
-# Retrieve all books from the database
-books = Book.objects.all()
+# Retrieve book by title
+book = Book.objects.get(title="1984")
 
 # Display each book with all attributes
 for book in books:
