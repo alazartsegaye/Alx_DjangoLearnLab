@@ -22,7 +22,7 @@ admin.site.register(CustomUser, CustomUserAdmin)
 # Register the Book model
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'publication_year')
+    book_list = ('title', 'author', 'publication_year')
 
 # Function to assign permissions to groups
 def assign_permissions_to_groups():
