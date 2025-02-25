@@ -47,3 +47,19 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+
+    # Define custom permissions
+    class Meta:
+        permissions = [
+            ("can_view", "Can view post"),
+            ("can_create", "Can create post"),
+            ("can_edit", "Can edit post"),
+            ("can_delete", "Can delete post"),
+        ]
+
+    def __str__(self):
+        return self.title
