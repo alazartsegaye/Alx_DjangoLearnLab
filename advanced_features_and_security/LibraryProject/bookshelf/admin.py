@@ -19,34 +19,35 @@ class BookAdmin(admin.ModelAdmin):
 # Register the CustomUser model with the CustomUserAdmin class
 admin.site.register(CustomUser, CustomUserAdmin)
 
-class LibraryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-
-admin.site.register(Library, LibraryAdmin)
-admin.site.register(Book)
+# Register the Book model
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'publication_year')
 
 # Function to assign permissions to groups
 def assign_permissions_to_groups():
+    content_type = ContentType.objects.get_for_model(Book)
+
     # Get the permissions
-    can_view_books = Permission.objects.get(codename="can_view_books")
-    can_checkout_books = Permission.objects.get(codename="can_checkout_books")
-    can_add_books = Permission.objects.get(codename="can_add_books")
-    can_remove_books = Permission.objects.get(codename="can_remove_books")
+    can_view = Permission.objects.get(codename="can_view", content_type=content_type)
+    can_create = Permission.objects.get(codename="can_create", content_type=content_type)
+    can_edit = Permission.objects.get(codename="can_edit", content_type=content_type)
+    can_delete = Permission.objects.get(codename="can_delete", content_type=content_type)
 
     # Create or get existing groups
-    readers_group, created = Group.objects.get_or_create(name="Readers")
-    librarians_group, created = Group.objects.get_or_create(name="Librarians")
-    admins_group, created = Group.objects.get_or_create(name="Admins")
+    viewers_group, _ = Group.objects.get_or_create(name="Viewers")
+    editors_group, _ = Group.objects.get_or_create(name="Editors")
+    admins_group, _ = Group.objects.get_or_create(name="Admins")
 
     # Assign permissions to groups
-    readers_group.permissions.add(can_view_books, can_checkout_books)
-    librarians_group.permissions.add(can_view_books, can_checkout_books, can_add_books)
-    admins_group.permissions.add(can_view_books, can_checkout_books, can_add_books, can_remove_books)
+    viewers_group.permissions.set([can_view])  # Only view
+    editors_group.permissions.set([can_view, can_create, can_edit])  # View, create, edit
+    admins_group.permissions.set([can_view, can_create, can_edit, can_delete])  # Full access
 
-    # Save groups after adding permissions
-    readers_group.save()
-    librarians_group.save()
+    # Save groups
+    viewers_group.save()
+    editors_group.save()
     admins_group.save()
 
-# Call this function in a signal, or run manually as needed.
+# Call this function to create the groups and permissions
 assign_permissions_to_groups()
