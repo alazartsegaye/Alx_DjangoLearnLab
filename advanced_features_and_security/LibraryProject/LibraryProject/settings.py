@@ -113,6 +113,9 @@ SECURE_BROWSER_XSS_FILTER = True
 # Prevent the site from being embedded in iframes (protects against clickjacking)
 X_FRAME_OPTIONS = "DENY"
 
+# Ensure the site is only accessible via HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
