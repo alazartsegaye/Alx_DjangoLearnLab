@@ -92,6 +92,26 @@ DATABASES = {
     }
 }
 
+# SECURITY WARNING: Set to True in production to enforce HTTPS
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP traffic to HTTPS
+
+# HTTP Strict Transport Security (HSTS) settings
+SECURE_HSTS_SECONDS = 31536000  # 1 year (Recommended value)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow site to be preloaded in browsers
+
+# Ensure the browser only transmits cookies over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Prevent browsers from MIME-sniffing content-type
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable the browser’s XSS protection
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent the site from being embedded in iframes (protects against clickjacking)
+X_FRAME_OPTIONS = "DENY"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
