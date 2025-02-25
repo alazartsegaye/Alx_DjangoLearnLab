@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .managers import CustomUserManager
 from django.contrib.auth.models import BaseUserManager
 
 class Book(models.Model):
