@@ -7,24 +7,17 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
 
-    def __str__(self):
-        return self.title
-
-class Library(models.Model):
-    name = models.CharField(max_length=100)
-    books = models.ManyToManyField(Book)
-    
     # Define custom permissions
     class Meta:
         permissions = [
-            ("can_view_books", "Can view books in library"),
-            ("can_checkout_books", "Can checkout books from library"),
-            ("can_add_books", "Can add books to library"),
-            ("can_remove_books", "Can remove books from library"),
+            ("can_view", "Can view books"),
+            ("can_create", "Can create books"),
+            ("can_edit", "Can edit books"),
+            ("can_delete", "Can delete books"),
         ]
 
     def __str__(self):
-        return self.name
+        return self.title
 
 class CustomUserManager(BaseUserManager):
     """Custom manager for CustomUser model with support for email as username."""
