@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%-vtc15%v+pw0piu4d0u$b3%gf*3zxoog+97$yp#h7sd1kqx-w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bookshelf.com', 'sub.bookshelf.com']
 
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking
