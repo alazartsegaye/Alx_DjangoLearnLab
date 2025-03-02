@@ -4,13 +4,11 @@ from django.http import HttpResponseForbidden
 from .models import Book
 from .forms import ExampleForm
 
-# View all books (Requires 'can_view' permission)
 @permission_required('app_name.can_view', raise_exception=True)
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'book_list.html', {'books': books})
 
-# Create a new book (Requires 'can_create' permission)
 @permission_required('app_name.can_create', raise_exception=True)
 def create_book(request):
     if request.method == 'POST':
@@ -21,7 +19,6 @@ def create_book(request):
         return redirect('book_list')
     return render(request, 'create_book.html')
 
-# Edit a book (Requires 'can_edit' permission)
 @permission_required('app_name.can_edit', raise_exception=True)
 def edit_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
@@ -33,7 +30,6 @@ def edit_book(request, book_id):
         return redirect('book_list')
     return render(request, 'edit_book.html', {'book': book})
 
-# Delete a book (Requires 'can_delete' permission)
 @permission_required('app_name.can_delete', raise_exception=True)
 def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
