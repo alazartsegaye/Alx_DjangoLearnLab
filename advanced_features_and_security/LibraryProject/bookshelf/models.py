@@ -7,8 +7,6 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
 
-    # Define custom permissions
-    class Meta:
         permissions = [
             ("can_view", "Can view books"),
             ("can_create", "Can create books"),
@@ -20,10 +18,8 @@ class Book(models.Model):
         return self.title
 
 class CustomUserManager(BaseUserManager):
-    """Custom manager for CustomUser model with support for email as username."""
 
     def create_user(self, username, email, password=None, date_of_birth=None, profile_photo=None, **extra_fields):
-        """Create and return a regular user."""
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
@@ -33,7 +29,6 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):
-        """Create and return a superuser."""
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
