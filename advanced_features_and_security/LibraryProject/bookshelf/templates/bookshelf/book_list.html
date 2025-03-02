@@ -6,14 +6,12 @@
     <title>Book List</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Book List</h1>
+    <div>
+        <h1>Book List</h1>
         
-        <!-- Add a button to create a new book (optional) -->
-        <a href="{% url 'book_create' %}" class="btn btn-primary mb-3">Add New Book</a>
+        <a href="{% url 'book_create' %}">Add New Book</a>
 
-        <!-- Display the list of books in a table -->
-        <table class="table table-striped">
+        <table>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -29,15 +27,14 @@
                     <td>{{ book.author }}</td>
                     <td>{{ book.publication_year }}</td>
                     <td>
-                        <!-- Add links to view, edit, or delete a book -->
-                        <a href="{% url 'book_detail' book.id %}" class="btn btn-info btn-sm">View</a>
-                        <a href="{% url 'book_update' book.id %}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="{% url 'book_delete' book.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'book_detail' book.id %}">View</a>
+                        <a href="{% url 'book_update' book.id %}">Edit</a>
+                        <a href="{% url 'book_delete' book.id %}">Delete</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="text-center">No books available.</td>
+                    <td>No books available.</td>
                 </tr>
                 {% endfor %}
             </tbody>
