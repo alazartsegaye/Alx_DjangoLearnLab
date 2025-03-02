@@ -7,7 +7,7 @@ from .forms import ExampleForm
 @permission_required('app_name.can_view', raise_exception=True)
 def book_list(request):
     books = Book.objects.all()
-    return render(request, 'book_list.html', {'books': books})
+    return render(request, 'bookshelf/book_list.html', {'books': books})
 
 @permission_required('app_name.can_create', raise_exception=True)
 def create_book(request):
@@ -17,7 +17,7 @@ def create_book(request):
         publication_year = request.POST['publication_year']
         Book.objects.create(title=title, author=author, publication_year=publication_year)
         return redirect('book_list')
-    return render(request, 'create_book.html')
+    return render(request, 'bookshelf/create_book.html')
 
 @permission_required('app_name.can_edit', raise_exception=True)
 def edit_book(request, book_id):
@@ -28,10 +28,10 @@ def edit_book(request, book_id):
         book.publication_year = request.POST['publication_year']
         book.save()
         return redirect('book_list')
-    return render(request, 'edit_book.html', {'book': book})
+    return render(request, 'bookshelf/edit_book.html', {'book': book})
 
 @permission_required('app_name.can_delete', raise_exception=True)
 def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     book.delete()
-    return redirect('book_list')
+    return redirect('bookshelf/book_list')
