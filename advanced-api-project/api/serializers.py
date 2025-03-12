@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 from .models import Book, Author
 
 # BookSerializer: Serializes all fields of the Book model
@@ -15,8 +14,9 @@ class BookSerializer(serializers.ModelSerializer):
         from django.utils import timezone
         current_year = timezone.now().year  # Get the current year
         if value > current_year:
-            raise ValidationError("Publication year cannot be in the future.")
+            raise serializers.ValidationError("Publication year cannot be in the future.")  # Use serializers.ValidationError
         return value
+
 
 # AuthorSerializer: Serializes the Author model and includes nested BookSerializer for related books
 class AuthorSerializer(serializers.ModelSerializer):
