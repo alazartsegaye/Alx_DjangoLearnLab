@@ -4,7 +4,8 @@ from rest_framework import status
 from .models import Book
 from .serializers import BookSerializer
 from django_filters import rest_framework
-from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.filters.OrderingFilter import OrderingFilter
+from rest_framework.filters.SearchFilter import SearchFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 # ListView: Retrieve all books
