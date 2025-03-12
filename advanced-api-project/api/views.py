@@ -3,12 +3,18 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Book
 from .serializers import BookSerializer
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 # ListView: Retrieve all books
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()  # Fetch all books
     serializer_class = BookSerializer  # Use the BookSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]  # Enable filtering and searching
+    filterset_fields = ['title', 'author', 'publication_year']  # Fields to filter by
+    search_fields = ['title', 'author__name']  # Fields to search on
+    ordering_fields = ['title', 'publication_year']  # Fields to order by
+    ordering = ['title']  # Default ordering
     permission_classes = [permissions.AllowAny]  # Allow anyone to view the list
 
 # DetailView: Retrieve a single book by ID
