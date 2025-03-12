@@ -8,11 +8,13 @@ from .serializers import BookSerializer
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()  # Fetch all books
     serializer_class = BookSerializer  # Use the BookSerializer
+    permission_classes = [permissions.AllowAny]  # Allow anyone to view the list
 
 # DetailView: Retrieve a single book by ID
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()  # Fetch a specific book
     serializer_class = BookSerializer  # Use the BookSerializer
+    permission_classes = [permissions.AllowAny]  # Allow anyone to view the list
 
 
 # CreateView: Add a new book
@@ -72,3 +74,4 @@ class BookUpdateView(generics.UpdateAPIView):
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()  # Fetch a specific book
     serializer_class = BookSerializer  # Use the BookSerializer
+    permission_classes = [permissions.IsAuthenticated]  # Only authenticated users can delete books
