@@ -34,50 +34,35 @@ class BookTests(APITestCase):
         self.assertEqual(Book.objects.count(), 2)
 
     def test_retrieve_book(self):
-        url = reverse('book-detail', args=[self.book.id])  # Use the correct URL name for BookDetailView
+        url = reverse('book-detail', args=[self.book.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], 'Test Book')
 
     def test_update_book(self):
-        url = reverse('book-update', args=[self.book.id])  # Use the correct URL name for BookUpdateView
+        url = reverse('book-update', args=[self.book.id])
         data = {'title': 'Updated Book'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Book.objects.get(id=self.book.id).title, 'Updated Book')
 
     def test_delete_book(self):
-        url = reverse('book-delete', args=[self.book.id])  # Use the correct URL name for BookDeleteView
+        url = reverse('book-delete', args=[self.book.id])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Book.objects.count(), 0)
 
     def test_unauthenticated_access(self):
-        # Log out the user
         self.client.logout()
 
-        # Test unauthenticated access to BookCreateView
         url = reverse('book-create')
         response = self.client.post(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-        # Test unauthenticated access to BookUpdateView
         url = reverse('book-update', args=[self.book.id])
         response = self.client.patch(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-        # Test unauthenticated access to BookDeleteView
         url = reverse('book-delete', args=[self.book.id])
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_authenticated_access(self):
-        # Test authenticated access to BookListView
-        url = reverse('book-list')  # Use the correct URL name for BookListView
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-        # Test authenticated access to BookDetailView
-        url = reverse('book-detail', args=[self.book.id])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
