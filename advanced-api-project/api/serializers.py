@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Book, Author
 
-# BookSerializer: Serializes all fields of the Book model
+# BookSerializer
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
@@ -18,16 +18,14 @@ class BookSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        print("Validated Data:", validated_data)  # Debugging: Print validated data
+        print("Validated Data:", validated_data)
         return Book.objects.create(**validated_data)
 
 
-# AuthorSerializer: Serializes the Author model and includes nested BookSerializer for related books
+# AuthorSerializer
 class AuthorSerializer(serializers.ModelSerializer):
-    # Nested BookSerializer to serialize the related books
-    # `books` is the related_name specified in the Book model's ForeignKey field
     books = BookSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Author  # Specifies the model to be serialized
-        fields = ['id', 'name', 'books']  # Specifies the fields to include in the serialized output
+        model = Author
+        fields = ['id', 'name', 'books'] 
