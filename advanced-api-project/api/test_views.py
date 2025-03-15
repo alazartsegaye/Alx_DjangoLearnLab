@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from .models import Book
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
 
 class BookTests(APITestCase):
     def setUp(self):
@@ -42,7 +41,14 @@ class BookTests(APITestCase):
         self.assertEqual(Book.objects.count(), 0)
 
     def test_unauthenticated_access(self):
-        self.client.credentials()
+        self.client.logout()
         url = reverse('book-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_authenticated_access(self):
+        self.client.login(username='testuser', password='testpass')
+        url = reverse('book-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.client.logout()
