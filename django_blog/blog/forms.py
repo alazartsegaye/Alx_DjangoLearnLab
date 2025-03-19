@@ -18,24 +18,22 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
-# Profile Form for Editing User Details
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+class TagWidget(forms.TextInput):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.attrs.update({'class': 'tag-input'})
 
 class PostForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'tag-select'}),
         required=False
     )
 
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
-
-# Comment form for commenting on a Post
+        
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
