@@ -2,12 +2,16 @@ from django.urls import path
 from .views import register, profile, CustomLoginView, CustomLogoutView
 from .views import (PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, CommentCreateView, 
 CommentUpdateView, CommentDeleteView)
+from . import views
 
 urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('register/', register, name='register'),
     path('profile/', profile, name='profile'),
+
+    path('search/', views.search, name='search'),
+    path('tags/<str:tag_name>/', views.posts_by_tag, name='posts_by_tag'),
 
     path('post/', PostListView.as_view(), name='post-list'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
