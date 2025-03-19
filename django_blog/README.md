@@ -8,17 +8,15 @@ This is a Django-based blog application that allows users to create, read, updat
 - **Blog Posts**: Create, read, update, and delete blog posts.
 - **Tagging**: Add tags to blog posts for better organization.
 - **Search**: Search for posts by title, content, or tags.
-- **Responsive Design**: Works on all devices (desktop, tablet, mobile).
 
 ## Technologies Used
 - **Backend**: Django (Python)
 - **Frontend**: HTML, CSS, JavaScript
-- **Database**: SQLite (default), PostgreSQL (optional)
+- **Database**: MySQL
 
 ### Other Tools
 - **Django Allauth**: For authentication
 - **Django Taggit**: For tagging
-- **Django Crispy Forms**: For form styling
 
 ## Getting Started
 
@@ -44,7 +42,7 @@ Before running the project, ensure you have the following installed:
 
 3. **Install dependencies**:
     ```bash
-    pip install -r requirements.txt
+    pip install (All requirements)
     ```
 
 4. **Set up the database**:
