@@ -1,3 +1,4 @@
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +12,13 @@
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'posts' %}">Blog Posts</a></li>
+                <li><a href="{% url 'post' %}">Blog Posts</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'register' %}">Register</a></li>
             </ul>
         </nav>
     </header>
+
     <form action="{% url 'search' %}" method="get">
         <input type="text" name="q" placeholder="Search posts...">
         <button type="submit">Search</button>
