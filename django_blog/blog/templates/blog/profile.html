@@ -1,7 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
 <h2>Profile</h2>
-<form method="post">
+
+<form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    <label for="first_name">First Name:</label>
+    <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" value="{{ user.email }}">
+
     <button type="submit">Update Profile</button>
 </form>
-<a href="{% url 'logout' %}">Logout</a>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}
