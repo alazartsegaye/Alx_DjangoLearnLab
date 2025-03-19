@@ -5,12 +5,15 @@ CommentUpdateView, CommentDeleteView, PostByTagListView)
 from . import views
 
 urlpatterns = [
+
+    path('', views.home, name='home'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('register/', register, name='register'),
     path('profile/', profile, name='profile'),
+    path('search/', views.search, name='search'),
 
-    path('post/', PostListView.as_view(), name='post-list'),
+    path('post/', PostListView.as_view(), name='post'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
