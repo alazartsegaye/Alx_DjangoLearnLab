@@ -26,10 +26,10 @@ class TagWidget(forms.TextInput):
 class PostForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
-        widget=forms.SelectMultiple(attrs={'class': 'tag-select'}),
+        widget=TagWidget(),
         required=False
     )
-
+    
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
