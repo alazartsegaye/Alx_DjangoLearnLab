@@ -29,8 +29,9 @@ DEBUG = False
 ALLOWED_HOSTS = ['Alazar.pythonanywhere.com','127.0.0.1', 'localhost']
 
 SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'  # Prevents clickjacking
+X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True
 
 # Ensure cookies are sent over HTTPS only
 CSRF_COOKIE_SECURE = True
