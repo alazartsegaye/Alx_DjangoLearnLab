@@ -59,6 +59,14 @@ def like_post(request, pk):
     like, created = Like.objects.get_or_create(user=request.user, post=post)
 
     if created:
+         if post.author != request.user:
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb="liked your post",
+                target_content_type=ContentType.objects.get_for_model(post),
+                target_object_id=post.id
+            )
         return Response({"message": "Post liked successfully."}, status=status.HTTP_201_CREATED)
     return Response({"message": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
 
