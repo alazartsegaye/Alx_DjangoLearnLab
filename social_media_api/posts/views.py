@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from notifications.models import Notification
 from django.contrib.contenttypes.models import ContentType
+from rest_framework import generics
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 5
@@ -52,29 +53,19 @@ class FeedViewSet(viewsets.ReadOnlyModelViewSet):
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
     
 @api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def like_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = generics.get_object_or_404(Post, pk=pk)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
 
     if created:
-        if post.author != request.user:
-            Notification.objects.create(
-                recipient=post.author,
-                actor=request.user,
-                verb="liked your post",
-                target_content_type=ContentType.objects.get_for_model(post),
-                target_object_id=post.id
-            )
         return Response({"message": "Post liked successfully."}, status=status.HTTP_201_CREATED)
-
     return Response({"message": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
-
 def unlike_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-
+    post = generics.get_object_or_404(Post, pk=pk)
     try:
         like = Like.objects.get(user=request.user, post=post)
         like.delete()
