@@ -4,11 +4,12 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework import generics
+from accounts.models import CustomUser
 
 User = get_user_model()
 
@@ -41,13 +42,10 @@ class ProfileView(APIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
     
-class UserDetailView(generics.GenericAPIView):
+class UserListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request, *args, **kwargs):
-        user = self.request.user
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+    serializer_class = UserSerializer
+    queryset = CustomUser.objects.all()
 
     def post(self, request, *args, **kwargs):
         user_id = request.data.get("user_id")
