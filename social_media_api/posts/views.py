@@ -19,9 +19,12 @@ class PostViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'content']
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
+    def get_queryset(self):
+        post_pk = self.kwargs.get('post_pk')
+        if post_pk:
+            return Comment.objects.filter(post=post_pk).order_by('-created_at')
+        return Comment.objects.all().order_by('-created_at')
+        
 # Comment ViewSet
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
