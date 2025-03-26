@@ -42,7 +42,7 @@ class ProfileView(APIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
     
-class UserListView(generics.ListAPIView):
+class UserListView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
     queryset = CustomUser.objects.all()
